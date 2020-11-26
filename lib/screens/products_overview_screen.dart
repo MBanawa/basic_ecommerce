@@ -1,4 +1,6 @@
 import 'package:basic_ecommerce_app/providers/cart.dart';
+import 'package:basic_ecommerce_app/screens/cart_screen.dart';
+import 'package:basic_ecommerce_app/widgets/app_drawer.dart';
 import 'package:basic_ecommerce_app/widgets/badge.dart';
 import 'package:flutter/material.dart';
 
@@ -43,15 +45,19 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ),
           Consumer<Cart>(
               builder: (_, cart, chld) => Badge(
-                  color: Colors.red,
-                  child: chld,
-                  value: cart.itemCount.toString()),
+                    color: Colors.red,
+                    child: chld,
+                    value: cart.itemCount.toString(),
+                  ),
               child: IconButton(
                 icon: Icon(Icons.shopping_cart),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CartScreen.routeName);
+                },
               )),
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
     return scaffold;
