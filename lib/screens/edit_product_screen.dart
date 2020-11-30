@@ -176,8 +176,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         if (value.isEmpty) {
                           return 'This field is required';
                         }
-                        if (value.startsWith('http') ||
-                            value.startsWith('https')) {
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
                           return 'Please return a valid URL';
                         }
                         return null;
