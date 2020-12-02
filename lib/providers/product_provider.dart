@@ -53,9 +53,10 @@ class Products with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     const url = 'https://basic-ecommerce-5d066.firebaseio.com/products.json';
-    http.post(
+    return http
+        .post(
       url,
       body: json.encode({
         'title': product.title,
@@ -64,16 +65,19 @@ class Products with ChangeNotifier {
         'imageUrl': product.imageUrl,
         'isFavorite': product.isFavorite,
       }),
-    );
-    final newProduct = Product(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl);
-    _items.add(newProduct);
+    )
+        .then((response) {
+      print(json.decode(response.body));
+      final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl);
+      _items.add(newProduct);
 
-    notifyListeners();
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
