@@ -1,4 +1,5 @@
 import 'package:basic_ecommerce_app/providers/cart.dart';
+import 'package:basic_ecommerce_app/providers/product_provider.dart';
 import 'package:basic_ecommerce_app/screens/cart_screen.dart';
 import 'package:basic_ecommerce_app/widgets/app_drawer.dart';
 import 'package:basic_ecommerce_app/widgets/badge.dart';
@@ -19,6 +20,24 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +77,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
     return scaffold;
   }
