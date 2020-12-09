@@ -1,4 +1,3 @@
-import 'package:basic_ecommerce_app/providers/product_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:basic_ecommerce_app/providers/cart.dart';
