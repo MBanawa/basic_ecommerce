@@ -1,3 +1,4 @@
+import 'package:basic_ecommerce_app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +46,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.greenAccent,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
