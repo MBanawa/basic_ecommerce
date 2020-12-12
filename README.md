@@ -1,4 +1,4 @@
 # basic_ecommerce_app
 
-A basic ecommerce app using basic state management
+A basic eCommerce app using Firebase Real-Time Database, Provider and Shared Preferences
 
