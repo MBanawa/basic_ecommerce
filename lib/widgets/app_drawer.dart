@@ -1,3 +1,4 @@
+import 'package:basic_ecommerce_app/helpers/custom_route.dart';
 import 'package:basic_ecommerce_app/providers/auth.dart';
 import 'package:basic_ecommerce_app/screens/order_screen.dart';
 import 'package:basic_ecommerce_app/screens/user_products_screen.dart';
@@ -27,7 +28,10 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.payment),
             title: Text('Checkout'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
+              // Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
+              Navigator.of(context).pushReplacement(CustomRoute(
+                builder: (ctx) => OrderScreen(),
+              ));
             },
           ),
           Divider(),
